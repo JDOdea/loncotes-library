@@ -73,6 +73,8 @@ app.MapGet("/api/materials", (LoncotesLibraryDbContext db, int? materialId, int?
 app.MapGet("/api/materials/available", (LoncotesLibraryDbContext db) =>
 {
     return db.Materials
+        .Include(m => m.Genre)
+        .Include(m => m.MaterialType)
         .Where(m => m.OutOfCirculationSince == null)
         .Where(m => m.Checkouts.All(co => co.ReturnDate != null))
         .ToList();
@@ -156,7 +158,9 @@ app.MapGet("/api/genres", (LoncotesLibraryDbContext db) =>
 //  Get all Patrons
 app.MapGet("/api/patrons", (LoncotesLibraryDbContext db) =>
 {
-    return db.Patrons.ToList();
+    return db.Patrons
+    .OrderBy(p => p.Id)
+    .ToList();
 });
 
 //  Get Patron with Checkouts
@@ -186,7 +190,7 @@ app.MapPut("/api/patrons/{id}", (LoncotesLibraryDbContext db, int id, Patron pat
 });
 
 
-//  Deactivate Patron
+//  Change activity of Patron
 app.MapPut("/api/patrons/{id}/isactive", (LoncotesLibraryDbContext db, int id) =>
 {
     Patron patronToDeactivate = db.Patrons.SingleOrDefault(p => p.Id == id);
@@ -202,6 +206,18 @@ app.MapPut("/api/patrons/{id}/isactive", (LoncotesLibraryDbContext db, int id) =
 #endregion
 
 #region Endpoint--Checkouts
+//  Get all current Checkouts
+app.MapGet("/api/checkouts", (LoncotesLibraryDbContext db) =>
+{
+    return db.Checkouts
+        .Include(p => p.Patron)
+        .Include(m => m.Material)
+        .ThenInclude(m => m.MaterialType)
+        /* .Where(co => co.ReturnDate == null) */
+        .OrderBy(co => co.Id)
+        .ToList();
+});
+
 //  Get Overdue Checkouts
 app.MapGet("/api/checkouts/overdue", (LoncotesLibraryDbContext db) =>
 {

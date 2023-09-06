@@ -30,7 +30,8 @@ public class LoncotesLibraryDbContext : DbContext
         {
             new Patron {Id = 1, FirstName = "Josh", LastName = "Baugh", Address = "145 East Ocean Drive", Email = "joshb@gmail.com", IsActive = true},
             new Patron {Id = 2, FirstName = "Liza", LastName = "Vavrichyna", Address = "963 Highland St", Email = "lizav@gmail.com", IsActive = true},
-            new Patron {Id = 3, FirstName = "JD", LastName = "Fitzmartin", Address = "2144 Fairview Lane", Email = "jdfitz@gmail.com", IsActive = false}
+            new Patron {Id = 3, FirstName = "JD", LastName = "Fitzmartin", Address = "2144 Fairview Lane", Email = "jdfitz@gmail.com", IsActive = true},
+            new Patron {Id = 4, FirstName = "Greg", LastName = "Korte", Address = "451 Highway Ave", Email = "gregk@gmail.com", IsActive = true}
         });
 
         modelBuilder.Entity<Genre>().HasData(new Genre[]
@@ -57,6 +58,13 @@ public class LoncotesLibraryDbContext : DbContext
             new Material {Id = 8, MaterialName = "Unbroken", MaterialTypeId = 5, GenreId = 6},
             new Material {Id = 9, MaterialName = "Trench", MaterialTypeId = 4, GenreId = 8},
             new Material {Id = 10, MaterialName = "The Storyteller", MaterialTypeId = 5, GenreId = 5},
+        });
+
+        modelBuilder.Entity<Checkout>().HasData(new Checkout[]
+        {
+            new Checkout {Id = 6, MaterialId = 13, PatronId = 4, CheckoutDate = DateTime.Parse("2023-08-10T15:40:34.037788")},
+            new Checkout {Id = 7, MaterialId = 5, PatronId = 3, CheckoutDate = DateTime.Parse("2023-08-16T15:40:34.037788")},
+            new Checkout {Id = 8, MaterialId = 6, PatronId = 1, CheckoutDate = DateTime.Parse("2023-08-12T15:40:34.037788")}
         });
     }
 }

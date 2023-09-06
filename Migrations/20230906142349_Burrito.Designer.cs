@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LoncotesLibrary.Migrations
 {
     [DbContext(typeof(LoncotesLibraryDbContext))]
-    partial class LoncotesLibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230906142349_Burrito")]
+    partial class Burrito
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,32 +53,6 @@ namespace LoncotesLibrary.Migrations
                     b.HasIndex("PatronId");
 
                     b.ToTable("Checkouts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 6,
-                            CheckoutDate = new DateTime(2023, 8, 10, 15, 40, 34, 37, DateTimeKind.Unspecified).AddTicks(7880),
-                            MaterialId = 13,
-                            Paid = false,
-                            PatronId = 4
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CheckoutDate = new DateTime(2023, 8, 16, 15, 40, 34, 37, DateTimeKind.Unspecified).AddTicks(7880),
-                            MaterialId = 5,
-                            Paid = false,
-                            PatronId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CheckoutDate = new DateTime(2023, 8, 12, 15, 40, 34, 37, DateTimeKind.Unspecified).AddTicks(7880),
-                            MaterialId = 6,
-                            Paid = false,
-                            PatronId = 1
-                        });
                 });
 
             modelBuilder.Entity("LoncotesLibrary.Models.Genre", b =>
